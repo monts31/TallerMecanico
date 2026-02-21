@@ -1,0 +1,189 @@
+﻿create database tallerMecanico;
+
+use tallerMecanico;
+
+create table clientes(
+	claveCliente int primary key auto_increment,
+    rfc varchar(13) unique not null,
+    nombre varchar(30) not null,
+    apellidoPaterno varchar(20) not null,
+    apellidoMaterno varchar(20) not null,
+    domicilio varchar(40) not null,
+    colonia varchar(30) not null,
+    codigoPostal varchar(5) not null,
+    ciudad varchar(30) not null,
+    telefono varchar(10) not null,
+    telefono2 varchar(10),
+    correo varchar(40),
+    fechaRegistro date not null
+);
+
+create table vehiculos(
+    numeroSerie int primary key unique,
+    placas varchar(9) not null,
+    marca varchar(20) not null,
+    modelo varchar(20) not null,
+    año char(4) not null,
+    color varchar(20),
+    kilometraje float not null,
+    tipo varchar(30) not null,
+    antiguedad int default (year(current_date()) - año) not null,
+    claveCliente int,
+    foreign key (claveCliente) references Clientes(claveCliente) 
+);
+
+create table mecanicos(
+	numeroEmpleado int primary key auto_increment, 
+    rfc varchar(13) unique not null,
+    nombre varchar(30) not null,
+    apellidoPaterno varchar(20) not null,
+    apellidoMaterno varchar(20) not null,
+    especialidades varchar(100) not null,
+    telefono varchar(10) not null,
+    salario float not null,
+    añosExperiencia float
+);
+ 
+create table servicios(
+	claveServicio int primary key auto_increment, 
+    nombreServicio varchar(50) not null,
+    descripcion varchar(100) not null,
+    costoBase float not null,
+    tiempoEstimado time not null,
+    estado enum('ACTIVO','INACTIVO') not null default 'ACTIVO'
+);
+
+create table refacciones(
+	codigoRefaccion int primary key unique,
+    nombre varchar(30) not null,
+    marca varchar(20) not null,
+    precioUnitario float not null,
+    stockActual int not null,
+    stockMinimo int not null,
+    proveedor varchar(20) not null,
+    estado enum('ACTIVO','INACTIVO') not null default 'ACTIVO'
+);
+alter table refacciones modify column proveedor varchar(40) not null;
+
+create table ordenesServicio(
+	folioOrden int primary key auto_increment,
+    fechaIngreso date not null,
+    fechaEstimadaEntrega date not null,
+    fechaRealEntrega date not null,
+    estado enum('Abierta', 'En proceso', 'Finalizada', 'Canncelada') not null,
+    costoTotal float not null,
+    numeroSerie int,
+    foreign key(numeroSerie) references vehiculos(numeroSerie)
+);
+
+create table OrdenServicio(
+	folioOrden int,
+	claveServicio int,
+	primary key(folioOrden, claveServicio),
+	foreign key(folioOrden) references ordenesServicio(folioOrden),
+	foreign key(claveServicio) references servicios(claveServicio)
+);
+
+create table OrdenRefaccion(
+	folioOrden int,
+	codigoRefaccion int,
+	primary key(folioOrden, codigoRefaccion),
+	foreign key(folioOrden) references ordenesServicio(folioOrden),
+	foreign key(codigoRefaccion) references refacciones(codigoRefaccion)
+);
+
+create table MecanicoOrden(
+	folioOrden int,
+    numeroEmpleado int,
+    primary key(folioOrden, numeroEmpleado),
+    foreign key(folioOrden) references ordenesServicio(folioOrden),
+    foreign key(numeroEmpleado) references mecanicos(numeroEmpleado)
+);
+
+insert into clientes(rfc, nombre, apellidoPaterno, apellidoMaterno, domicilio, colonia, codigoPostal, ciudad, telefono, correo, fechaRegistro) values 
+	('SAAD0508311H0', 'Daniel', 'Sanchez', 'Malagon', 'Durango #30', 'Centro', '38800', 'Moroleon', '4451234561', 'daniel@gmail.com', current_date()),
+	('VIAD0612201H4', 'Diego', 'Villagomez', 'Aguilera', 'Sonora #12', 'Deseada de arriba', '38982', 'Uriangato', '4459083456', 'diego@gmail.com', current_date()),
+	('ALMJ0401051H5', 'Jonathan', 'Alcantar', 'Malagon', 'Sonora #05', 'Desada de arriba', '38982', 'Uriangato', '4451051178', 'joathan@gmail.com', current_date()),
+    ('COGA0625061H3', 'Alan Fransisco', 'Contreras', 'Guzman', 'Coahuila #24', 'Centro', '38900', '4456821398', 'Uriangato', 'alan@gmail.com', current_date()),
+    ('RAZO0511121H2', 'Obed Isai', 'Ramirez', 'Zavala', 'Pipila #34', 'Centro', '38800', 'Moroleon', '4532156890', 'obed@gmail.com', current_date());
+
+insert into vehiculos(numeroSerie, placas, marca, modelo, año, color, kilometraje, tipo) values
+	(3112, 'ABC-123-D', 'Jeep', 'Rubicon', '2013', 'Blanco', 20000, 'Pickup'),
+	(2121, 'NAV-121-A', 'Cooper', 'Mini cooper', '2024', 'Gris', 21000, 'Auto compacto'),
+    (1234, 'TVI-315-M', 'Ford', 'Mustang', '2026', 'Negro', 24000, 'Deportivo'),
+    (4536, 'DAG-112-N', 'Ford', 'Raptor 4x4', '2018', 'Blanco', 20000, 'Camioneta'),
+    (4569, 'ALG-223-C', 'Chevrolet', 'Camaro', '2023', 'Rojo', 21000, 'DEportivo');
+    
+insert into mecanicos(rfc, nombre, apellidoPaterno, apellidoMaterno, especialidades, telefono, salario, añosExperiencia) values
+	('HUMI050107HGT', 'Isaac', 'Hurtado', 'Morales', 'Todo', '4451234568', 6000, 8),
+    ('FORA051230HGT', 'Alan', 'Fonseca', 'Rios', 'automotriz', '4451234568', 8000, 6),
+    ('QWER051009HGT', 'Natanael', 'Cano', 'Hernandez', 'todo', '4456890459', 6000, 4),
+    ('FGHT991203HGT', 'Hassan', 'Fernandez', 'Gonzales', 'todo', '4451239865', 3500, 5),
+    ('NOZL051106HGT', 'Leonardo', 'Nuñez', 'Zavala', 'hidraulico', '4451238956', 9000, 41);
+    
+insert into servicios (nombreServicio, descripcion, costoBase, tiempoEstimado) values
+	('Cambio de aceite', 'Cambio de aceite de motor y revisión de niveles', 450.00, '00:30:00'),
+	('Alineación y balanceo', 'Ajuste de dirección y balanceo de llantas', 600.00, '01:00:00'),
+	('Cambio de batería', 'Sustitución de batería y verificación del sistema eléctrico', 700.00, '00:40:00'),
+	('Cambio de amortiguadores', 'Sustitución de amortiguadores delanteros', 1800.00, '03:00:00'),
+	('Revisión de suspensión', 'Inspección completa del sistema de suspensión', 650.00, '01:15:00');
+
+insert into refacciones (codigoRefaccion, nombre, marca, precioUnitario, stockActual, stockMinimo, proveedor) values
+	(1001, 'Filtro de aceite', 'ACDelco', 120.00, 25, 5, 'AutoZone'),
+	(1002, 'Filtro de aire', 'Bosch', 180.00, 20, 5, 'Refaccionaria Lopez'),
+	(1003, 'Bujía estándar', 'NGK', 95.00, 40, 10, 'Refaccionaria Central'),
+	(1004, 'Batería 12V', 'LTH', 1800.00, 8, 2, 'LTH Distribuidor'),
+	(1005, 'Pastillas de freno', 'Brembo', 650.00, 15, 4, 'Frenos MX'),
+	(1006, 'Disco de freno', 'Brembo', 950.00, 10, 3, 'Frenos MX'),
+	(1007, 'Amortiguador delantero', 'Monroe', 1250.00, 6, 2, 'Suspensiones Pro'),
+	(1008, 'Aceite 5W30', 'Mobil', 230.00, 50, 10, 'Lubricantes MX'),
+	(1009, 'Aceite 10W40', 'Castrol', 220.00, 45, 10, 'Lubricantes MX'),
+	(1010, 'Filtro de gasolina', 'Bosch', 210.00, 18, 5, 'AutoRefacciones Diaz'),
+	(1011, 'Banda de distribución', 'Gates', 980.00, 7, 2, 'Bandas y Mangueras SA'),
+	(1012, 'Radiador', 'Denso', 2400.00, 3, 1, 'Sistemas Enfriamiento'),
+	(1013, 'Termostato', 'Motorad', 350.00, 12, 3, 'Refaccionaria Central'),
+	(1014, 'Bomba de agua', 'Aisin', 1100.00, 5, 2, 'Bombas Industriales'),
+	(1015, 'Balatas traseras', 'Akebono', 620.00, 14, 4, 'Frenos MX');
+    
+insert into ordenesServicio (fechaIngreso, fechaEstimadaEntrega, fechaRealEntrega, estado, costoTotal, numeroSerie) values
+	('2026-02-01', '2026-02-02', '2026-02-02', 'Finalizada', 1050, 3112),
+	('2026-02-03', '2026-02-05', '2026-02-05', 'Finalizada', 2400, 2121),
+	('2026-02-04', '2026-02-06', '2026-02-06', 'Finalizada', 850, 1234),
+	('2026-02-05', '2026-02-07', '2026-02-07', 'Finalizada', 1800, 4536),
+	('2026-02-06', '2026-02-08', '2026-02-08', 'Finalizada', 650, 4569),
+	('2026-02-07', '2026-02-09', '2026-02-09', 'Finalizada', 1300, 3112),
+	('2026-02-08', '2026-02-10', '2026-02-10', 'Finalizada', 2700, 2121),
+	('2026-02-09', '2026-02-11', '2026-02-11', 'Finalizada', 1500, 4536);
+
+insert into OrdenServicio (folioOrden, claveServicio) values
+	(1, 1),
+	(2, 2),
+	(3, 3),
+	(4, 4),
+	(5, 5),
+	(6, 1),
+	(7, 2),
+	(8, 4);
+
+insert into OrdenRefaccion (folioOrden, codigoRefaccion) values
+	(1, 1001),
+	(2, 1004),
+	(3, 1005),
+	(4, 1007),
+	(5, 1013),
+	(6, 1008),
+	(7, 1011),
+	(8, 1015);
+
+insert into MecanicoOrden (folioOrden, numeroEmpleado) values
+	(1, 1),
+	(2, 2),
+	(3, 3),
+	(4, 4),
+	(5, 5),
+	(6, 1),
+	(7, 2),
+	(8, 3);
+
+
+    
