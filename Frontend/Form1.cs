@@ -9,6 +9,7 @@ namespace TallerMecanico
 
         private void btnServicios_Click(object sender, EventArgs e)
         {
+           
             servicios serviciosForm = new servicios();
             this.Hide();
             serviciosForm.ShowDialog();

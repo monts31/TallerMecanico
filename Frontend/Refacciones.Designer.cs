@@ -56,12 +56,15 @@
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(244, 472);
+            btnCancelar.BackColor = Color.DarkSlateBlue;
+            btnCancelar.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCancelar.ForeColor = Color.Lavender;
+            btnCancelar.Location = new Point(155, 438);
             btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(75, 23);
+            btnCancelar.Size = new Size(88, 35);
             btnCancelar.TabIndex = 27;
             btnCancelar.Text = "Cancelar";
-            btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.UseVisualStyleBackColor = false;
             btnCancelar.Click += btnCancelar_Click;
             // 
             // btnAgregar
@@ -76,15 +79,17 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(34, 329);
+            label5.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label5.ForeColor = Color.FromArgb(19, 20, 46);
+            label5.Location = new Point(28, 298);
             label5.Name = "label5";
-            label5.Size = new Size(71, 15);
+            label5.Size = new Size(93, 19);
             label5.TabIndex = 24;
             label5.Text = "Stock actual";
             // 
             // txtPrecio
             // 
-            txtPrecio.Location = new Point(34, 286);
+            txtPrecio.Location = new Point(28, 251);
             txtPrecio.Name = "txtPrecio";
             txtPrecio.Size = new Size(233, 23);
             txtPrecio.TabIndex = 23;
@@ -100,7 +105,7 @@
             // 
             // txtMarca
             // 
-            txtMarca.Location = new Point(34, 202);
+            txtMarca.Location = new Point(34, 192);
             txtMarca.Name = "txtMarca";
             txtMarca.Size = new Size(233, 23);
             txtMarca.TabIndex = 21;
@@ -116,7 +121,7 @@
             // 
             // txtNombre
             // 
-            txtNombre.Location = new Point(34, 143);
+            txtNombre.Location = new Point(34, 134);
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(233, 23);
             txtNombre.TabIndex = 19;
@@ -132,7 +137,7 @@
             // 
             // txtCodigo
             // 
-            txtCodigo.Location = new Point(34, 85);
+            txtCodigo.Location = new Point(34, 71);
             txtCodigo.Name = "txtCodigo";
             txtCodigo.Size = new Size(233, 23);
             txtCodigo.TabIndex = 17;
@@ -159,6 +164,7 @@
             // 
             dataGridView1.AllowUserToOrderColumns = true;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.BackgroundColor = Color.Lavender;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(309, 64);
             dataGridView1.Name = "dataGridView1";
@@ -169,52 +175,63 @@
             // Codigo
             // 
             Codigo.AutoSize = true;
-            Codigo.Location = new Point(39, 62);
+            Codigo.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Codigo.ForeColor = Color.FromArgb(19, 20, 46);
+            Codigo.Location = new Point(39, 49);
             Codigo.Name = "Codigo";
-            Codigo.Size = new Size(46, 15);
+            Codigo.Size = new Size(59, 19);
             Codigo.TabIndex = 28;
             Codigo.Text = "Codigo";
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(52, 125);
+            label7.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label7.ForeColor = Color.FromArgb(19, 20, 46);
+            label7.Location = new Point(34, 112);
             label7.Name = "label7";
-            label7.Size = new Size(51, 15);
+            label7.Size = new Size(66, 19);
             label7.TabIndex = 29;
             label7.Text = "Nombre";
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(56, 181);
+            label8.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label8.ForeColor = Color.FromArgb(19, 20, 46);
+            label8.Location = new Point(34, 170);
             label8.Name = "label8";
-            label8.Size = new Size(40, 15);
+            label8.Size = new Size(50, 19);
             label8.TabIndex = 30;
             label8.Text = "Marca";
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(51, 268);
+            label9.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label9.ForeColor = Color.FromArgb(19, 20, 46);
+            label9.Location = new Point(28, 229);
             label9.Name = "label9";
-            label9.Size = new Size(84, 15);
+            label9.Size = new Size(111, 19);
             label9.TabIndex = 31;
             label9.Text = "Precio unitario";
             // 
             // btnRegistrar
             // 
-            btnRegistrar.Location = new Point(145, 472);
+            btnRegistrar.BackColor = Color.DarkSlateBlue;
+            btnRegistrar.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnRegistrar.ForeColor = Color.Lavender;
+            btnRegistrar.Location = new Point(28, 438);
             btnRegistrar.Name = "btnRegistrar";
-            btnRegistrar.Size = new Size(75, 23);
+            btnRegistrar.Size = new Size(93, 35);
             btnRegistrar.TabIndex = 32;
             btnRegistrar.Text = "Registrar";
-            btnRegistrar.UseVisualStyleBackColor = true;
+            btnRegistrar.UseVisualStyleBackColor = false;
             btnRegistrar.Click += btnRegistrar_Click;
             // 
             // txtStockActual
             // 
-            txtStockActual.Location = new Point(39, 356);
+            txtStockActual.Location = new Point(28, 320);
             txtStockActual.Name = "txtStockActual";
             txtStockActual.Size = new Size(100, 23);
             txtStockActual.TabIndex = 33;
@@ -222,7 +239,7 @@
             // 
             // txtStockMinimo
             // 
-            txtStockMinimo.Location = new Point(181, 356);
+            txtStockMinimo.Location = new Point(155, 320);
             txtStockMinimo.Name = "txtStockMinimo";
             txtStockMinimo.Size = new Size(100, 23);
             txtStockMinimo.TabIndex = 35;
@@ -230,32 +247,37 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(181, 329);
+            label6.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.ForeColor = Color.FromArgb(19, 20, 46);
+            label6.Location = new Point(155, 298);
             label6.Name = "label6";
-            label6.Size = new Size(81, 15);
+            label6.Size = new Size(106, 19);
             label6.TabIndex = 34;
             label6.Text = "Stock minimo";
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(42, 393);
+            label10.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label10.ForeColor = Color.FromArgb(19, 20, 46);
+            label10.Location = new Point(28, 362);
             label10.Name = "label10";
-            label10.Size = new Size(61, 15);
+            label10.Size = new Size(81, 19);
             label10.TabIndex = 36;
             label10.Text = "Proveedor";
             // 
             // txtProveedor
             // 
-            txtProveedor.Location = new Point(47, 421);
+            txtProveedor.Location = new Point(28, 384);
             txtProveedor.Name = "txtProveedor";
-            txtProveedor.Size = new Size(100, 23);
+            txtProveedor.Size = new Size(227, 23);
             txtProveedor.TabIndex = 37;
             // 
             // Refacciones
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Lavender;
             ClientSize = new Size(1078, 507);
             Controls.Add(txtProveedor);
             Controls.Add(label10);

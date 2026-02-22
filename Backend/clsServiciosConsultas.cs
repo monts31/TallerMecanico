@@ -17,7 +17,8 @@ namespace TallerMecanico.Backend
             try
             {
                 conexion.Open();
-                string query = "SELECT * FROM servicios where estado='ACTIVO'";
+                string query = "SELECT claveServicio, nombreServicio, descripcion, costoBase, tiempoEstimado" +
+                    " FROM servicios where estado='ACTIVO'";
                 MySqlCommand comando = new MySqlCommand(query, conexion);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(comando);
                 System.Data.DataTable tablaProductos = new System.Data.DataTable();
@@ -126,9 +127,9 @@ namespace TallerMecanico.Backend
             {
                 conexion.Open();
 
-                string query = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'servicios'";
-        
-        MySqlCommand cmd = new MySqlCommand(query, conexion);
+                string query = "SELECT IFNULL(MAX(claveServicio),0) + 1 FROM servicios";
+
+                MySqlCommand cmd = new MySqlCommand(query, conexion);
                 siguienteId = Convert.ToInt32(cmd.ExecuteScalar());
             }
 

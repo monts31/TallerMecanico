@@ -105,26 +105,52 @@ namespace TallerMecanico
             }
 
         }
-
+        
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            clsServiciosConsultas serv = new clsServiciosConsultas();
-            if (editando)
-            {
+            
 
-                serv.actualizarServicio(idServicio, txtNombre.Text, txtDescripcion.Text, Convert.ToDecimal(txtCosto.Text), dateTimePicker1.Value.TimeOfDay);
-                MessageBox.Show("Servicio actualizado correctamente.");
-                editando = false;
-                idServicio = -1;
-                btnAgregar.Text = "Agregar servicio";
+            if (txtCosto.Text == "" || txtDescripcion.Text == "" || txtNombre.Text == "")
+            {
+                MessageBox.Show("Por favor, completa todos los campos.");
+                return;
             }
-            else {                 
-                serv.insertarServicio(txtNombre.Text, txtDescripcion.Text, Convert.ToDecimal(txtCosto.Text), dateTimePicker1.Value.TimeOfDay);
-                MessageBox.Show("Servicio agregado correctamente.");
+            if(!decimal.TryParse(txtCosto.Text, out decimal costo) || costo<=0)
+            {
+                MessageBox.Show("Por favor, ingresa un costo válido.");
+                return;
             }
-            llenarDatos();
-            limpiarCampos();
-            textBox1.Text = consultas.obtenerSiguienteId().ToString();
+            if(txtNombre.Text.Length < 5 || int.TryParse(txtNombre.Text, out _))
+            {
+                MessageBox.Show("Por favor ingrese un nombre valido");
+                return;
+            }
+            if (txtDescripcion.Text.Length > 10 || int.TryParse(txtDescripcion.Text, out _))
+            {
+                MessageBox.Show("Por favor ingrese una descripcion valida");
+                return;
+            }
+            else
+            {
+                clsServiciosConsultas serv = new clsServiciosConsultas();
+                if (editando)
+                {
+
+                    serv.actualizarServicio(idServicio, txtNombre.Text, txtDescripcion.Text, costo, dateTimePicker1.Value.TimeOfDay);
+                    MessageBox.Show("Servicio actualizado correctamente.");
+                    editando = false;
+                    idServicio = -1;
+                    btnAgregar.Text = "Agregar servicio";
+                }
+                else
+                {
+                    serv.insertarServicio(txtNombre.Text, txtDescripcion.Text, Convert.ToDecimal(txtCosto.Text), dateTimePicker1.Value.TimeOfDay);
+                    MessageBox.Show("Servicio agregado correctamente.");
+                }
+                llenarDatos();
+                limpiarCampos();
+                textBox1.Text = consultas.obtenerSiguienteId().ToString();
+            }
         }
 
         public void limpiarCampos()

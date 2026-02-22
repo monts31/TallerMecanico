@@ -15,7 +15,8 @@ namespace TallerMecanico.Backend
             try
             {
                 conexion.Open();
-                string query = "SELECT * FROM refacciones where estado='ACTIVO'";
+                string query = "SELECT codigoRefaccion, nombre, marca, precioUnitario, stockActual, stockMinimo, proveedor" +
+                    " FROM refacciones where estado='ACTIVO'";
                 MySqlCommand comando = new MySqlCommand(query, conexion);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(comando);
                 System.Data.DataTable tablaProductos = new System.Data.DataTable();
