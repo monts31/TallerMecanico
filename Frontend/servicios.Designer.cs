@@ -42,6 +42,7 @@
             dateTimePicker1 = new DateTimePicker();
             btnAgregar = new Button();
             btnCancelar = new Button();
+            btnRegresar = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -51,7 +52,7 @@
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.Lavender;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(289, 72);
+            dataGridView1.Location = new Point(289, 59);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(791, 374);
             dataGridView1.TabIndex = 0;
@@ -188,12 +189,26 @@
             btnCancelar.UseVisualStyleBackColor = false;
             btnCancelar.Click += btnCancelar_Click;
             // 
+            // btnRegresar
+            // 
+            btnRegresar.BackColor = Color.DarkSlateBlue;
+            btnRegresar.Font = new Font("Tahoma", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnRegresar.ForeColor = Color.Lavender;
+            btnRegresar.Location = new Point(1005, 452);
+            btnRegresar.Name = "btnRegresar";
+            btnRegresar.Size = new Size(75, 27);
+            btnRegresar.TabIndex = 14;
+            btnRegresar.Text = "Inicio";
+            btnRegresar.UseVisualStyleBackColor = false;
+            btnRegresar.Click += btnRegresar_Click;
+            // 
             // servicios
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Lavender;
             ClientSize = new Size(1092, 482);
+            Controls.Add(btnRegresar);
             Controls.Add(btnCancelar);
             Controls.Add(btnAgregar);
             Controls.Add(dateTimePicker1);
@@ -232,5 +247,6 @@
         private DateTimePicker dateTimePicker1;
         private Button btnAgregar;
         private Button btnCancelar;
+        private Button btnRegresar;
     }
 }

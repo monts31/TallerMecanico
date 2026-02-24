@@ -51,6 +51,7 @@
             label6 = new Label();
             label10 = new Label();
             txtProveedor = new TextBox();
+            btnRegresar = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -273,12 +274,26 @@
             txtProveedor.Size = new Size(227, 23);
             txtProveedor.TabIndex = 37;
             // 
+            // btnRegresar
+            // 
+            btnRegresar.BackColor = Color.DarkSlateBlue;
+            btnRegresar.Font = new Font("Tahoma", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnRegresar.ForeColor = Color.Lavender;
+            btnRegresar.Location = new Point(980, 472);
+            btnRegresar.Name = "btnRegresar";
+            btnRegresar.Size = new Size(75, 32);
+            btnRegresar.TabIndex = 38;
+            btnRegresar.Text = "Inicio";
+            btnRegresar.UseVisualStyleBackColor = false;
+            btnRegresar.Click += btnRegresar_Click;
+            // 
             // Refacciones
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Lavender;
             ClientSize = new Size(1078, 507);
+            Controls.Add(btnRegresar);
             Controls.Add(txtProveedor);
             Controls.Add(label10);
             Controls.Add(txtStockMinimo);
@@ -335,5 +350,6 @@
         private Label label6;
         private Label label10;
         private TextBox txtProveedor;
+        private Button btnRegresar;
     }
 }

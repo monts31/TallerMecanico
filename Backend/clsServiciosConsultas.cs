@@ -11,6 +11,15 @@ namespace TallerMecanico.Backend
 {
     public class clsServiciosConsultas
     {
+        /// <summary>
+        /// este método se encarga de obtener los servicios de la base de datos, se establece una conexión 
+        /// con la base de datos, se ejecuta una consulta SQL para obtener los datos de los servicios activos,
+        /// a continuación, se utiliza un MySqlDataAdapter para llenar un DataTable con los resultados de la consulta 
+        /// y se devuelve el DataTable con los servicios obtenidos. Si ocurre algún error durante el proceso, 
+        /// se lanza una excepción con un mensaje descriptivo del error.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public System.Data.DataTable obtenerServicios()
         {
             MySqlConnection conexion = Conexion.conexion();
@@ -37,6 +46,18 @@ namespace TallerMecanico.Backend
 
         }
 
+        /// <summary>
+        /// este método se encarga de actualizar los datos de un servicio en la base de datos, 
+        /// se establece una conexión con la base de datos, se ejecuta una consulta SQL para 
+        /// actualizar los datos del servicio con el ID especificado,
+        /// y se utilizan parámetros para evitar problemas de inyección SQL. 
+        /// Si ocurre algún error durante el proceso, se muestra un mensaje de error con una descripción del problema. Al finalizar, se cierra la conexión a la base de datos.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="nombre"></param>
+        /// <param name="descripcion"></param>
+        /// <param name="precio"></param>
+        /// <param name="tiempo"></param>
         public void actualizarServicio(int id, string nombre, string descripcion, decimal precio, TimeSpan tiempo)
         {
             using (MySqlConnection conexion = Conexion.conexion())
@@ -70,6 +91,16 @@ namespace TallerMecanico.Backend
 
         }
 
+        /// <summary>
+        /// este método se encarga de insertar un nuevo servicio en la base de datos, se establece una conexión 
+        /// con la base de datos, se ejecuta una consulta SQL para insertar los datos del nuevo servicio,
+        /// y se utilizan parámetros para evitar problemas de inyección SQL. 
+        /// Si ocurre algún error durante el proceso, se muestra un mensaje de error con una descripción del problema. Al finalizar, se cierra la conexión a la base de datos.
+        /// </summary>
+        /// <param name="nombre"></param>
+        /// <param name="descripcion"></param>
+        /// <param name="costo"></param>
+        /// <param name="tiempo"></param>
         public void insertarServicio(string nombre, string descripcion, decimal costo, TimeSpan tiempo)
         {
             using (MySqlConnection conexion = Conexion.conexion())
@@ -99,6 +130,14 @@ namespace TallerMecanico.Backend
             }
         }
 
+        /// <summary>
+        /// este método se encarga de eliminar un servicio de la base de datos, se establece una conexión 
+        /// con la base de datos, se ejecuta una consulta SQL para actualizar el estado del servicio a "INACTIVO" 
+        /// con el ID especificado,y se utiliza un parámetro para evitar problemas de inyección SQL. 
+        /// Si ocurre algún error durante el proceso, se muestra un mensaje de error con una descripción del problema. 
+        /// Al finalizar, se cierra la conexión a la base de datos.
+        /// </summary>
+        /// <param name="id"></param>
         public void eliminarServicio(int id)
         {
             using (MySqlConnection conexion = Conexion.conexion())
@@ -119,6 +158,14 @@ namespace TallerMecanico.Backend
 
         }
 
+        /// <summary>
+        /// este método se encarga de obtener el siguiente ID disponible para un nuevo servicio, se establece una 
+        /// conexión con la base de datos, se ejecuta una consulta SQL para obtener el máximo ID actual en la tabla 
+        /// de servicios y se le suma 1 para obtener el siguiente ID disponible. 
+        /// Si ocurre algún error durante el proceso, se muestra un mensaje de error con una descripción del problema. 
+        /// Al finalizar, se cierra la conexión a la base de datos.
+        /// </summary>
+        /// <returns></returns>
         public int obtenerSiguienteId()
         {
             int siguienteId = 0;

@@ -23,6 +23,12 @@ namespace TallerMecanico
         {
 
         }
+        /// <summary>
+        /// este método se encarga de llenar el DataGridView con los datos obtenidos de la base de datos,
+        /// además de configurar las columnas del DataGridView para mostrar los datos de manera adecuada, 
+        /// como centrar los encabezados, establecer los nombres de las columnas, ajustar el ancho de las columnas
+        /// y agregar botones de edición y eliminación a cada fila del DataGridView.
+        /// </summary>
         public void llenarDatos()
         {
             //clsServiciosConsultas consultas = new clsServiciosConsultas();
@@ -67,12 +73,29 @@ namespace TallerMecanico
             }
         }
 
+        /// <summary>
+        /// este evento se ejecuta al cargar el formulario, llama al método 
+        /// llenarDatos para mostrar los servicios en el DataGridView y 
+        /// establece el siguiente ID disponible en el campo de texto correspondiente.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void servicios_Load(object sender, EventArgs e)
         {
+
             llenarDatos();
             textBox1.Text = consultas.obtenerSiguienteId().ToString();
+            dataGridView1.AutoGenerateColumns = false;
 
         }
+
+        /// <summary>
+        /// este evento se ejecuta al hacer click en una celda del DataGridView, 
+        /// si se hace click en el botón de editar se llenan los campos de texto con los datos 
+        /// del servicio seleccionado para poder editarlos, si se hace click en el botón de eliminar se muestra un 
+        /// mensaje de confirmación y si se confirma se elimina el servicio seleccionado de la base de datos. 
+        /// Después de cada acción se actualiza el DataGridView y se limpian los campos de texto.
+        /// </summary>
         int idServicio = -1;
         bool editando = false;
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -91,7 +114,7 @@ namespace TallerMecanico
                 editando = true;
                 btnAgregar.Text = "Actualizar";
             }
-            if(dataGridView1.Columns[e.ColumnIndex].Name == "Eliminar")
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "Eliminar")
             {
                 idServicio = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["claveServicio"].Value);
                 DialogResult result = MessageBox.Show("¿Estás seguro de que deseas eliminar este servicio?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -105,27 +128,34 @@ namespace TallerMecanico
             }
 
         }
-        
+
+        /// <summary>
+        /// este botón se encarga de agregar un nuevo servicio o actualizar uno existente 
+        /// dependiendo del estado de la variable "editando". Antes de realizar la acción, 
+        /// se validan los campos de texto para asegurarse de que estén completos y contengan datos válidos.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            
+
 
             if (txtCosto.Text == "" || txtDescripcion.Text == "" || txtNombre.Text == "")
             {
                 MessageBox.Show("Por favor, completa todos los campos.");
                 return;
             }
-            if(!decimal.TryParse(txtCosto.Text, out decimal costo) || costo<=0)
+            if (!decimal.TryParse(txtCosto.Text, out decimal costo) || costo <= 0)
             {
                 MessageBox.Show("Por favor, ingresa un costo válido.");
                 return;
             }
-            if(txtNombre.Text.Length < 5 || int.TryParse(txtNombre.Text, out _))
+            if (txtNombre.Text.Length < 5 || int.TryParse(txtNombre.Text, out _))
             {
                 MessageBox.Show("Por favor ingrese un nombre valido");
                 return;
             }
-            if (txtDescripcion.Text.Length > 10 || int.TryParse(txtDescripcion.Text, out _))
+            if (txtDescripcion.Text.Length < 10 || int.TryParse(txtDescripcion.Text, out _))
             {
                 MessageBox.Show("Por favor ingrese una descripcion valida");
                 return;
@@ -153,6 +183,11 @@ namespace TallerMecanico
             }
         }
 
+        /// <summary>
+        /// esta función se encarga de limpiar los campos de texto y 
+        /// restablecer el valor del DateTimePicker al valor predeterminado,
+        /// lo que permite al usuario ingresar nuevos datos sin tener que borrar manualmente los campos anteriores.
+        /// </summary>
         public void limpiarCampos()
         {
             textBox1.Text = "";
@@ -162,10 +197,25 @@ namespace TallerMecanico
             dateTimePicker1.Value = DateTime.Now;
         }
 
+        /// <summary>
+        /// este evento se ejecuta al hacer click en el botón de cancelar, 
+        /// llama a la función limpiarCampos para limpiar los campos de texto y restablecer todos los valores.
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             limpiarCampos();
-             editando = false;
+            editando = false;
+        }
+
+        private void btnRegresar_Click(object sender, EventArgs e)
+        {
+            Form1 form1 = new Form1();
+            this.Hide();
+            form1.ShowDialog();
+            this.Close();
         }
     }
 }

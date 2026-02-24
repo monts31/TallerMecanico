@@ -18,6 +18,10 @@ namespace TallerMecanico
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// Función para llenar el DataGridView con los datos de las refacciones obtenidos de la base de datos, 
+        /// también se configuran las columnas del DataGridView para mostrar los datos de manera adecuada y se agregan botones de editar y eliminar para cada fila.
+        /// </summary>
         public void llenarDatos()
         {
             clsRefaccionesConsultas consultas = new clsRefaccionesConsultas();
@@ -38,7 +42,6 @@ namespace TallerMecanico
             dataGridView1.Columns[2].ReadOnly = true;
             dataGridView1.Columns[3].ReadOnly = true;
             dataGridView1.Columns[4].ReadOnly = true;
-            // dataGridView1.Columns[2].Width = 350;
 
 
             if (!dataGridView1.Columns.Contains("Editar"))
@@ -65,6 +68,14 @@ namespace TallerMecanico
         }
         int idRefaccion = -1;
         bool editando = false;
+        /// <summary>
+        /// Evento que se ejecuta al hacer click en una celda del DataGridView, si se hace click en el botón de editar 
+        /// se llenan los campos de texto con los datos de la refacción seleccionada para poder editarlos, 
+        /// si se hace click en el botón de eliminar se muestra un mensaje de confirmación y si se confirma se elimina la refacción seleccionada 
+        /// de la base de datos. Después de cada acción se actualiza el DataGridView y se limpian los campos de texto.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             clsRefaccionesConsultas consultas = new clsRefaccionesConsultas();
@@ -92,7 +103,7 @@ namespace TallerMecanico
                     consultas.eliminarRefaccion(idRefaccion);
                     llenarDatos();
                     limpiarCampos();
-                    
+
                 }
             }
         }
@@ -101,28 +112,76 @@ namespace TallerMecanico
         {
 
         }
-
+        /// <summary>
+        /// Evento que se ejecuta al hacer click en el botón de registrar, ademas de que no se permiten campos vacíos, se valida que el precio sea un número decimal válido 
+        /// y que el nombre tenga al menos 5 caracteres y no sea un número,
+        /// si se está editando una refacción se actualizan los datos de la refacción en la base de datos,
+        /// y si no se está editando se inserta una nueva refacción en la base de datos con los datos ingresados en los campos de texto.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
-            clsRefaccionesConsultas consultas = new clsRefaccionesConsultas();
-            if (editando)
+            if (txtCodigo.Text == "" || txtMarca.Text == "" || txtNombre.Text == "" || txtPrecio.Text == ""
+                || txtProveedor.Text == "" || txtStockActual.Text == "" || txtStockMinimo.Text == "")
             {
-
-                consultas.actualizarRefaccion(idRefaccion, txtNombre.Text, txtMarca.Text, Convert.ToDecimal(txtPrecio.Text), Convert.ToInt32(txtStockActual.Text), Convert.ToInt32(txtStockMinimo.Text), txtProveedor.Text);
-                MessageBox.Show("Refaccion actualizada correctamente.");
-                editando = false;
-                idRefaccion = -1;
-                btnRegistrar.Text = "Agregar refaccion";
+                MessageBox.Show("Debe de llenar todos los campos.");
+                return;
+            }
+            if (txtCodigo.Text.Length > 15 || !int.TryParse(txtCodigo.Text, out _))
+            {
+                MessageBox.Show("El código debe ser un número entero válido y no debe exceder los 15 caracteres.");
+                return;
+            }
+            if (txtStockActual.Text.Length > 8 || !int.TryParse(txtStockActual.Text, out int stockactual) || stockactual <= 0)
+            {
+                MessageBox.Show("El stock actual debe ser un número entero válido y no debe exceder los 8 caracteres.");
+                return;
+            }
+            if (txtStockMinimo.Text.Length > 8 || !int.TryParse(txtStockMinimo.Text, out int stockminimo) || stockminimo <= 0)
+            {
+                MessageBox.Show("El stock mínimo debe ser un número entero válido y no debe exceder los 8 caracteres.");
+                return;
+            }
+            if (!decimal.TryParse(txtPrecio.Text, out decimal _))
+            {
+                MessageBox.Show("El precio debe ser un número decimal válido.");
+                return;
+            }
+            if (txtNombre.Text.Length < 5 || int.TryParse(txtNombre.Text, out _))
+            {
+                MessageBox.Show("Por favor ingrese un nombre valido");
+                return;
             }
             else
             {
-                consultas.insertarRefaccion(Convert.ToInt32(txtCodigo.Text), txtNombre.Text, txtMarca.Text, Convert.ToDecimal(txtPrecio.Text), Convert.ToInt32(txtStockActual.Text), Convert.ToInt32(txtStockMinimo.Text), txtProveedor.Text);
-                MessageBox.Show("Refaccion agregada correctamente.");
+                clsRefaccionesConsultas consultas = new clsRefaccionesConsultas();
+                if (editando)
+                {
+
+                    consultas.actualizarRefaccion(idRefaccion, txtNombre.Text, txtMarca.Text, Convert.ToDecimal(txtPrecio.Text), stockactual, stockminimo, txtProveedor.Text);
+                    MessageBox.Show("Refaccion actualizada correctamente.");
+                    editando = false;
+                    idRefaccion = -1;
+                    btnRegistrar.Text = "Agregar refaccion";
+                }
+
+                else
+                {
+                    consultas.insertarRefaccion(Convert.ToInt32(txtCodigo.Text), txtNombre.Text, txtMarca.Text, Convert.ToDecimal(txtPrecio.Text), stockactual, stockminimo, txtProveedor.Text);
+                    MessageBox.Show("Refaccion agregada correctamente.");
+                }
+                llenarDatos();
+                limpiarCampos();
             }
-            llenarDatos();
-            limpiarCampos();
-            
+
         }
+        /// <summary>
+        /// Evento que se ejecuta al hacer click en el botón de cancelar, 
+        /// se limpian los campos de texto y se reinician las variables de edición.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -139,10 +198,25 @@ namespace TallerMecanico
             txtProveedor.Text = "";
         }
 
+        /// <summary>
+        /// Evento del formulario que se ejecuta al cargar el formulario, se llama a la función 
+        /// llenarDatos para mostrar las refacciones en el DataGridView al abrir el formulario.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Refacciones_Load(object sender, EventArgs e)
         {
             llenarDatos();
-            
+            dataGridView1.AutoGenerateColumns = false;
+
+        }
+
+        private void btnRegresar_Click(object sender, EventArgs e)
+        {
+            Form1 form1 = new Form1();
+            this.Hide();
+            form1.ShowDialog();
+            this.Close();
         }
     }
 }
