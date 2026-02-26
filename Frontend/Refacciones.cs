@@ -133,7 +133,7 @@ namespace TallerMecanico
                 MessageBox.Show("El código debe ser un número entero válido y no debe exceder los 15 caracteres.");
                 return;
             }
-            if (txtStockActual.Text.Length > 8 || !int.TryParse(txtStockActual.Text, out int stockactual) || stockactual <= 0)
+            if (txtStockActual.Text.Length > 8 || !int.TryParse(txtStockActual.Text, out int stockactual) || stockactual < 0)
             {
                 MessageBox.Show("El stock actual debe ser un número entero válido y no debe exceder los 8 caracteres.");
                 return;
@@ -143,7 +143,7 @@ namespace TallerMecanico
                 MessageBox.Show("El stock mínimo debe ser un número entero válido y no debe exceder los 8 caracteres.");
                 return;
             }
-            if (!decimal.TryParse(txtPrecio.Text, out decimal _))
+            if (!decimal.TryParse(txtPrecio.Text, out decimal precio) || precio<= 0)
             {
                 MessageBox.Show("El precio debe ser un número decimal válido.");
                 return;

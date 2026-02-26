@@ -85,6 +85,7 @@
             // 
             textBox1.Location = new Point(27, 86);
             textBox1.Name = "textBox1";
+            textBox1.ReadOnly = true;
             textBox1.Size = new Size(233, 23);
             textBox1.TabIndex = 3;
             // 

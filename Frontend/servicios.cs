@@ -190,7 +190,7 @@ namespace TallerMecanico
         /// </summary>
         public void limpiarCampos()
         {
-            textBox1.Text = "";
+           
             txtNombre.Text = "";
             txtDescripcion.Text = "";
             txtCosto.Text = "";
